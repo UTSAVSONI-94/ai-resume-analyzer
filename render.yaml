@@ -1,0 +1,9 @@
+services:
+  - type: web
+    runtime: docker
+    name: ai-resume-analyzer
+    repo: https://github.com/UTSAVSONI-94/ai-resume-analyzer.git
+    branch: main
+    plan: free
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
