@@ -48,4 +48,13 @@ interface Feedback {
             explanation: string;
         }[];
     };
+    keywordMatch?: {
+        found: string[];
+        missing: string[];
+    };
+    improvementSuggestions?: {
+        original: string;
+        improved: string;
+        reason: string;
+    }[];
 }

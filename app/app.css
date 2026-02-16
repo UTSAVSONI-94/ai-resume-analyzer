@@ -4,7 +4,7 @@
 
 @theme {
   --font-sans: "Mona Sans", ui-sans-serif, system-ui, sans-serif,
-  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --color-dark-200: #475467;
   --color-light-blue-100: #c1d3f81a;
   --color-light-blue-200: #a7bff14d;
@@ -20,29 +20,32 @@
 
 html,
 body {
-  @apply bg-white;
+  @apply bg-[#0f1629];
 }
 
 main {
-  @apply min-h-screen pt-10;
+  @apply min-h-screen pt-10 text-gray-200;
 }
+
 h1 {
-  @apply text-6xl  text-gradient leading-tight tracking-[-2px] font-semibold;
+  @apply text-6xl leading-tight tracking-[-2px] font-semibold;
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-[#c4b5fd] via-[#e2e8f0] to-[#93c5fd];
 }
 
 h2 {
-  @apply text-3xl text-dark-200;
+  @apply text-3xl text-gray-400;
 }
 
 label {
-  @apply text-dark-200;
+  @apply text-gray-300;
 }
+
 input {
-  @apply w-full p-4 inset-shadow rounded-2xl focus:outline-none bg-white;
+  @apply w-full p-4 rounded-2xl focus:outline-none bg-[#1e293b] text-gray-200 border border-[#2d3a4f] focus:border-indigo-500 transition-colors;
 }
 
 textarea {
-  @apply w-full p-4 inset-shadow rounded-2xl focus:outline-none bg-white;
+  @apply w-full p-4 rounded-2xl focus:outline-none bg-[#1e293b] text-gray-200 border border-[#2d3a4f] focus:border-indigo-500 transition-colors;
 }
 
 form {
@@ -51,45 +54,55 @@ form {
 
 @layer components {
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#AB8C95] via-[#000000] to-[#8E97C5];
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#c4b5fd] via-[#e2e8f0] to-[#93c5fd];
   }
+
   .gradient-border {
-    @apply bg-gradient-to-b from-light-blue-100 to-light-blue-200 p-4 rounded-2xl;
+    @apply bg-gradient-to-b from-[#1e293b] to-[#2d3a4f] p-4 rounded-2xl;
   }
+
   .primary-button {
     @apply primary-gradient text-white rounded-full px-4 py-2 cursor-pointer w-full;
   }
+
   .resume-nav {
-    @apply flex flex-row justify-between items-center p-4 border-b border-gray-200;
+    @apply flex flex-row justify-between items-center p-4 border-b border-[#2d3a4f];
   }
+
   .resume-summary {
     @apply flex flex-row items-center justify-center p-4 gap-4;
+
     .category {
-      @apply flex flex-row gap-2 items-center bg-gray-50 rounded-2xl p-4 w-full justify-between;
+      @apply flex flex-row gap-2 items-center bg-[#1a2035] rounded-2xl p-4 w-full justify-between;
     }
   }
+
   .back-button {
-    @apply flex flex-row items-center gap-2 border border-gray-200 rounded-lg p-2 shadow-sm;
+    @apply flex flex-row items-center gap-2 border border-[#2d3a4f] rounded-lg p-2 shadow-sm;
   }
+
   .auth-button {
-    @apply primary-gradient rounded-full py-4 px-8 cursor-pointer w-[600px] max-md:w-full text-3xl font-semibold text-white;
+    @apply primary-gradient rounded-full py-4 px-8 cursor-pointer w-[600px] max-md:w-full text-3xl font-semibold text-white shadow-lg;
   }
+
   .main-section {
     @apply flex flex-col items-center gap-8 pt-12 mx-15 pb-5;
   }
+
   .page-heading {
     @apply flex flex-col items-center gap-8 max-w-4xl text-center;
   }
+
   .resumes-section {
-    @apply flex flex-wrap max-lg:flex-col gap-6 items-start  w-full max-w-[1850px] justify-evenly;
+    @apply flex flex-wrap max-lg:flex-col gap-6 items-start w-full max-w-[1850px] justify-evenly;
   }
 
   .resume-card {
-    @apply flex flex-col gap-8 h-[560px] w-full lg:w-[450px] xl:w-[490px] bg-white rounded-2xl p-4;
+    @apply flex flex-col gap-8 h-[560px] w-full lg:w-[450px] xl:w-[490px] bg-[#1a2035] border border-[#2d3a4f] rounded-2xl p-4 transition-all duration-300 hover:shadow-xl hover:shadow-indigo-500/10 hover:-translate-y-1;
   }
 
   .resume-card-header {
-    @apply flex flex-row gap-2 justify-between min-h-[110px] max-sm:flex-col items-center max-md:justify-center max-md:items-center;
+    @apply flex flex-row gap-2 justify-between min-h-[110px] max-sm:flex-col items-center max-md:justify-center max-md:items-center text-gray-200;
   }
 
   .feedback-section {
@@ -97,7 +110,15 @@ form {
   }
 
   .navbar {
-    @apply flex flex-row justify-between items-center bg-white rounded-full p-4 w-full px-10 max-w-[1200px] mx-auto;
+    @apply flex flex-row justify-between items-center rounded-full p-4 w-full px-10 max-w-[1200px] mx-auto sticky top-4 z-50;
+  }
+
+  .uplader-drag-area {
+    @apply relative p-8 text-center transition-all duration-700 cursor-pointer bg-[#1a2035] border border-[#2d3a4f] rounded-2xl min-h-[208px];
+  }
+
+  .uploader-selected-file {
+    @apply flex items-center justify-between p-3 bg-[#1e293b] rounded-2xl;
   }
 
   .score-badge {
@@ -108,24 +129,18 @@ form {
     @apply flex flex-col gap-2 w-full items-start;
   }
 
-  .uplader-drag-area {
-    @apply relative p-8 text-center transition-all duration-700 cursor-pointer bg-white rounded-2xl min-h-[208px];
-  }
-  .uploader-selected-file {
-    @apply flex items-center justify-between p-3 bg-gray-50 rounded-2xl;
-  }
 }
 
 @utility bg-gradient {
-  background: linear-gradient(to bottom, #f0f4ff 60%, #fa7185cc);
+  background: linear-gradient(to bottom, #0f1629 60%, #312e81cc);
 }
 
 @utility text-gradient {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-[#AB8C95] via-[#000000] to-[#8E97C5];
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-[#c4b5fd] via-[#e2e8f0] to-[#93c5fd];
 }
 
 @utility gradient-hover {
-  @apply bg-gradient-to-b from-light-blue-100 to-light-blue-200;
+  @apply bg-gradient-to-b from-[#1e293b] to-[#2d3a4f];
 }
 
 @utility primary-gradient {
@@ -138,7 +153,7 @@ form {
 }
 
 @utility inset-shadow {
-  box-shadow: inset 0 0 12px 0 rgba(36, 99, 235, 0.2);
+  box-shadow: inset 0 0 12px 0 rgba(99, 102, 241, 0.15);
   backdrop-filter: blur(10px);
 }
 
@@ -146,6 +161,7 @@ form {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
