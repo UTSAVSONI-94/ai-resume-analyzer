@@ -42,12 +42,14 @@ const Upload = () => {
         const uuid = generateUUID();
         const data = {
             id: uuid,
+            userId: auth.user?.uuid, // Store user UUID
             resumePath: uploadedFile.path,
             imagePath: uploadedImage.path,
             companyName, jobTitle, jobDescription,
             feedback: '',
         }
-        await kv.set(`resume:${uuid}`, JSON.stringify(data));
+        // Use user-scoped key: user:{uuid}:resume:{uuid}
+        await kv.set(`user:${auth.user?.uuid}:resume:${uuid}`, JSON.stringify(data));
 
         setStatusText('Analyzing...');
 
@@ -68,7 +70,8 @@ const Upload = () => {
         feedbackText = feedbackText.replace(/^```(?:json)?\s*\n?/i, '').replace(/\n?\s*```$/i, '').trim();
 
         data.feedback = JSON.parse(feedbackText);
-        await kv.set(`resume:${uuid}`, JSON.stringify(data));
+        // Use user-scoped key: user:{uuid}:resume:{uuid}
+        await kv.set(`user:${auth.user?.uuid}:resume:${uuid}`, JSON.stringify(data));
         setStatusText('Analysis complete, redirecting...');
         addToast('Resume analyzed successfully!', 'success');
         console.log(data);

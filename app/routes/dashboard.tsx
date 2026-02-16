@@ -21,7 +21,9 @@ const Dashboard = () => {
 
     useEffect(() => {
         const load = async () => {
-            const data = (await kv.list('resume:*', true)) as any[];
+            if (!auth.user) return;
+            // Fetch only this user's resumes: user:{uuid}:resume:*
+            const data = (await kv.list(`user:${auth.user.uuid}:resume:*`, true)) as any[];
             if (data) {
                 const parsed = data
                     .filter((r: any) => r.value && r.value !== 'undefined')

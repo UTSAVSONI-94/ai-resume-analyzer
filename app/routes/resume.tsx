@@ -29,7 +29,9 @@ const Resume = () => {
 
     useEffect(() => {
         const loadResume = async () => {
-            const resume = await kv.get(`resume:${id}`);
+            if (!auth.user) return;
+            // Read from user-scoped key
+            const resume = await kv.get(`user:${auth.user.uuid}:resume:${id}`);
 
             if (!resume) return;
 

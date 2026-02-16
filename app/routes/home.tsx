@@ -26,9 +26,10 @@ export default function Home() {
 
   useEffect(() => {
     const loadResumes = async () => {
+      if (!auth.user) return;
       setLoadingResumes(true);
 
-      const resumes = (await kv.list('resume:*', true)) as KVItem[];
+      const resumes = (await kv.list(`user:${auth.user?.uuid}:resume:*`, true)) as KVItem[];
 
       const parsedResumes = resumes?.map((resume) => (
         JSON.parse(resume.value) as Resume

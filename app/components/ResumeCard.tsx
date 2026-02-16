@@ -5,7 +5,7 @@ import { usePuterStore } from "~/lib/puter";
 import { useToast } from "~/components/Toast";
 
 const ResumeCard = ({ resume: { id, companyName, jobTitle, feedback, imagePath, resumePath }, onDelete }: { resume: Resume, onDelete: (id: string) => void }) => {
-    const { fs, kv } = usePuterStore();
+    const { fs, kv, auth } = usePuterStore();
     const { addToast } = useToast();
     const [resumeUrl, setResumeUrl] = useState('');
     const [deleting, setDeleting] = useState(false);
@@ -32,7 +32,8 @@ const ResumeCard = ({ resume: { id, companyName, jobTitle, feedback, imagePath, 
         if (!confirm('Delete this resume analysis?')) return;
 
         setDeleting(true);
-        await kv.delete(`resume:${id}`);
+        // Use user-scoped key for deletion
+        await kv.delete(`user:${auth.user?.uuid}:resume:${id}`);
         try { await fs.delete(resumePath); } catch (e) { /* ignore */ }
         try { await fs.delete(imagePath); } catch (e) { /* ignore */ }
         onDelete(id);
