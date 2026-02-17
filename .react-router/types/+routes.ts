@@ -33,12 +33,21 @@ type Pages = {
   "/wipe": {
     params: {};
   };
+  "/tailor": {
+    params: {};
+  };
+  "/cover-letter": {
+    params: {};
+  };
+  "/interview": {
+    params: {};
+  };
 };
 
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/auth" | "/upload" | "/resume/:id" | "/dashboard" | "/compare" | "/wipe";
+    page: "/" | "/auth" | "/upload" | "/resume/:id" | "/dashboard" | "/compare" | "/wipe" | "/tailor" | "/cover-letter" | "/interview";
   };
   "routes/home.tsx": {
     id: "routes/home";
@@ -67,5 +76,17 @@ type RouteFiles = {
   "routes/wipe.tsx": {
     id: "routes/wipe";
     page: "/wipe";
+  };
+  "routes/tailor.tsx": {
+    id: "routes/tailor";
+    page: "/tailor";
+  };
+  "routes/cover-letter.tsx": {
+    id: "routes/cover-letter";
+    page: "/cover-letter";
+  };
+  "routes/interview.tsx": {
+    id: "routes/interview";
+    page: "/interview";
   };
 };

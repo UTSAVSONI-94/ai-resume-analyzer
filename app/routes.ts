@@ -8,4 +8,7 @@ export default [
     route('/dashboard', 'routes/dashboard.tsx'),
     route('/compare', 'routes/compare.tsx'),
     route('/wipe', 'routes/wipe.tsx'),
+    route('/tailor', 'routes/tailor.tsx'),
+    route('/cover-letter', 'routes/cover-letter.tsx'),
+    route('/interview', 'routes/interview.tsx'),
 ] satisfies RouteConfig;

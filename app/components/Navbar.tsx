@@ -20,6 +20,15 @@ const Navbar = () => {
                 <Link to="/compare" className={`text-sm font-medium px-3 py-1.5 rounded-full transition-all duration-300 ${location.pathname === '/compare' ? 'text-indigo-400 bg-indigo-500/10' : 'text-gray-400 hover:text-gray-200 hover:bg-[#2d3a4f]'}`}>
                     Compare
                 </Link>
+                <Link to="/tailor" className={`text-sm font-medium px-3 py-1.5 rounded-full transition-all duration-300 ${location.pathname === '/tailor' ? 'text-indigo-400 bg-indigo-500/10' : 'text-gray-400 hover:text-gray-200 hover:bg-[#2d3a4f]'}`}>
+                    Tailor
+                </Link>
+                <Link to="/cover-letter" className={`text-sm font-medium px-3 py-1.5 rounded-full transition-all duration-300 ${location.pathname === '/cover-letter' ? 'text-indigo-400 bg-indigo-500/10' : 'text-gray-400 hover:text-gray-200 hover:bg-[#2d3a4f]'}`}>
+                    Cover Letter
+                </Link>
+                <Link to="/interview" className={`text-sm font-medium px-3 py-1.5 rounded-full transition-all duration-300 ${location.pathname === '/interview' ? 'text-indigo-400 bg-indigo-500/10' : 'text-gray-400 hover:text-gray-200 hover:bg-[#2d3a4f]'}`}>
+                    Interview
+                </Link>
                 {location.pathname !== '/upload' && (
                     <Link to="/upload" className="primary-button w-fit text-sm font-semibold shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 ml-1">
                         Upload Resume

@@ -7,6 +7,8 @@ import { useNavigate } from "react-router";
 import { convertPdfToImage } from "~/lib/pdf2img";
 import { generateUUID } from "~/lib/utils";
 import { prepareInstructions } from "../../constants";
+import { analyzeResumeWithGemini } from "~/lib/gemini";
+import { extractTextFromPdf } from "~/lib/pdf";
 
 const Upload = () => {
     const { auth, isLoading, fs, ai, kv } = usePuterStore();
@@ -48,28 +50,32 @@ const Upload = () => {
             companyName, jobTitle, jobDescription,
             feedback: '',
         }
-        // Use user-scoped key: user:{uuid}:resume:{uuid}
-        await kv.set(`user:${auth.user?.uuid}:resume:${uuid}`, JSON.stringify(data));
 
-        setStatusText('Analyzing...');
-
-        const feedback = await ai.feedback(
-            uploadedFile.path,
-            prepareInstructions({ jobTitle, jobDescription })
-        )
-        if (!feedback) {
-            addToast('Failed to analyze resume', 'error');
-            return setStatusText('Error: Failed to analyze resume');
+        // Extract text from PDF
+        setStatusText('Extracting text from PDF...');
+        let text = '';
+        try {
+            text = await extractTextFromPdf(file);
+        } catch (e) {
+            console.error(e);
+            return setStatusText('Error: Failed to read PDF text. Is it a scanned image?');
         }
 
-        let feedbackText = typeof feedback.message.content === 'string'
-            ? feedback.message.content
-            : feedback.message.content[0].text;
+        setStatusText('Analyzing with Gemini 1.5...');
 
-        // Strip markdown code fences if the AI wraps the response
-        feedbackText = feedbackText.replace(/^```(?:json)?\s*\n?/i, '').replace(/\n?\s*```$/i, '').trim();
+        let feedback;
+        try {
+            feedback = await analyzeResumeWithGemini(text, jobDescription);
+        } catch (err: any) {
+            console.error(err);
+            if (err.message?.includes('API Key')) {
+                addToast("Missing Gemini API Key! Check .env", "error");
+                return setStatusText('Error: Missing Gemini API Key');
+            }
+            return setStatusText('Error: AI Analysis Failed');
+        }
 
-        data.feedback = JSON.parse(feedbackText);
+        data.feedback = feedback;
         // Use user-scoped key: user:{uuid}:resume:{uuid}
         await kv.set(`user:${auth.user?.uuid}:resume:${uuid}`, JSON.stringify(data));
         setStatusText('Analysis complete, redirecting...');
