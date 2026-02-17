@@ -9,4 +9,15 @@ export default defineConfig({
     port: 3000,
   },
   plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor': ['react', 'react-dom', 'react-router'],
+          'pdf-lib': ['pdfjs-dist'],
+          'gen-ai': ['@google/generative-ai'],
+        }
+      }
+    }
+  }
 });
